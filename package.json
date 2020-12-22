@@ -1,0 +1,27 @@
+{
+  "name": "eoparse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html?HOST_PORT=ws://127.0.0.1:10505/",
+  "scripts": {
+    "start": "nw . --disable-gpu-compositing --force-cpu-draw",
+    "build": "nwbuild --winIco=./GEO.ico --zip=false --platforms=win64 .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "window": {
+    "transparent": true,
+    "frame": false,
+    "toolbar": false,
+    "icon": "GEO.png"
+  },
+  "chromium-args": "--disable-gpu-compositing --force-cpu-draw",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nw": "^0.50.2",
+    "ws": "^7.4.1"
+  },
+  "devDependencies": {
+    "nw-builder": "^3.5.7"
+  }
+}
