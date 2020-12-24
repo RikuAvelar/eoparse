@@ -476,7 +476,9 @@ function Person(e, p) {
         "이프리트 에기", "イフリート・エギ", "伊弗利特之灵", "Ifrit-Egi",
         "타이탄 에기", "タイタン・エギ", "泰坦之灵", "Titan-Egi",
         "데미바하무트", "デミ・バハムート", "亚灵神巴哈姆特", "Demi-Bahamut", "デミ・フェニックス",
-        "데미피닉스", "Demi-Phönix", "Demi-Phénix", "Demi-Phoenix", "亚灵神不死鸟"
+        "데미피닉스", "Demi-Phönix", "Demi-Phénix", "Demi-Phoenix", "亚灵神不死鸟",
+        "Garuda", "Titan", "Ifrit", "Carbuncle", "Cait Sith", "Shiva", "Ramuh", "Leviathan", "Fenrir", "Diabolos", "Siren", "Atomos", "Alexander", "Odin",
+        "Light Spirit", "Fire Spirit", "Ice Spirit", "Air Spirit", "Earth Spirit", "Thunder Spirit", "Water Spirit", "Dark Spirit"
     ];
     var mchPetsList = ["자동포탑 룩", "オートタレット・ルーク", "车式浮空炮塔", "Selbstschuss-Gyrocopter Turm", "Auto-tourelle Tour", "Rook Autoturret",
         "자동포탑 비숍", "オートタレット・ビショップ", "象式浮空炮塔", "Selbstschuss-Gyrocopter Läufer", "Auto-tourelle Fou", "Bishop Autoturret",
@@ -490,8 +492,9 @@ function Person(e, p) {
     var ninPetsList = ["分身", "Gedoppeltes Ich", "Ombre", "Bunshin", "분신"];
     var astPetsList = ["지상의 별", "アーサリースター", "地星", "Earthly Star", "Étoile terrestre", "Irdischer Stern"];
 
-    var petsName = this.name.split(' (')[0];
-    if (this.Class == "") {
+    var split = this.name.split(' (');
+    var petsName = split[0];
+    if (this.Class == "" || split.length > 1) {
         if (smnPetsList.indexOf(petsName) > -1) {
             this.Job = "AVA";
             this.Class = "SMN";
@@ -520,12 +523,13 @@ function Person(e, p) {
             this.isPet = true;
             this.role = "Healer";
         } else if (this.name.indexOf('SC') === 0) {
-            this.Job = 'LMB';
+            this.Job = 'AVA';
             this.Class = 'LMB';
             this.isPet = true;
         } else if (this.name.indexOf("(") == -1) {
-            this.Job = "LMB";
+            this.Job = "AVA";
             this.Class = "LMB";
+            this.isPet = true;
         }
     }
     try {

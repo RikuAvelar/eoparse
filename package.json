@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nw": "^0.50.2",
+    "nw": "^0.50.2-sdk",
     "ws": "^7.4.1"
   },
   "devDependencies": {

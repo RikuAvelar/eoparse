@@ -100,6 +100,10 @@ function parse_action_packet(act)
 
 					if m.has_add_effect then
 						if T{196,223,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,385,386,387,388,389,390,391,392,393,394,395,396,397,398,732,767,768}:contains(m.add_effect_message) then
+							if string.match(PC_name, '.+ \((.+)\)') then
+								local player, full_match = string.match(PC_name, '.+ \((.+)\)')
+								PC_name = string.sub(player, 2, -2)
+							end
 							if not database[NPC_name]["SC ("..PC_name..")"] then
 								init_mob_player_table(NPC_name,"SC ("..PC_name..")")
 							end	
@@ -131,7 +135,7 @@ function construct_PC_name(PC)
         else
             result = name
         end
-        result = result..'-'..string.sub(nickname(PC.owner.name), 1, 3)..''
+        result = result..' ('..nickname(PC.owner.name)..')'
     else
         return nickname(name)
     end

@@ -1,5 +1,8 @@
 local ws_connected = false
 local sent_dc_msg = false
+local connection_attempts = 0
+
+local retry_limit = 1
 
 function send_data(data)
     local ok = client:send(data)
@@ -23,12 +26,23 @@ function connect_channel()
     if not ok and not sent_dc_msg then
         message('Could not find Eoparse server. Did you start the UI?')
         sent_dc_msg = true
+    else
+        connection_attempts = 0
     end
 end
 
+function reset_retries()
+    connection_attempts = 0
+end
+
 function maintain_connection()
-    if not client or not ws_connected then
+    if connection_attempts < retry_limit and (not client or not ws_connected) then
+        connection_attempts = connection_attempts + 1
         connect_channel()
+
+        if connection_attempts >= retry_limit then
+            coroutine.schedule(reset_retries, 30)
+        end
     end
 end
 
