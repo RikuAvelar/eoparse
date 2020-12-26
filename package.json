@@ -1,10 +1,10 @@
 {
   "name": "eoparse",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "",
   "main": "index.html?HOST_PORT=ws://127.0.0.1:10505/",
   "scripts": {
-    "start": "nw src --disable-gpu-compositing --force-cpu-draw",
+    "start": "nw . --disable-gpu-compositing --force-cpu-draw",
     "old-build": "nwbuild --winIco=./GEO.ico --zip=false --platforms=win64 .",
     "build": "node nw-package.js",
     "test": "echo \"Error: no test specified\" && exit 1"

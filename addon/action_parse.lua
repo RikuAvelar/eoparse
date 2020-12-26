@@ -130,11 +130,7 @@ function construct_PC_name(PC)
 	local name = PC.name
     local result = ''
     if PC.owner then
-        if string.len(name) > 7 then
-            result = string.sub(name, 1, 6)
-        else
-            result = name
-        end
+		result = name
         result = result..' ('..nickname(PC.owner.name)..')'
     else
         return nickname(name)
@@ -153,6 +149,14 @@ end
 function init_mob_player_table(mob_name,player_name)
 	if not database[mob_name] then
 		database[mob_name] = {}
+	end
+	if string.match(player_name, '.+ \((.+)\)') then
+		local player, full_match = string.match(player_name, '.+ \((.+)\)')
+		local owner = string.sub(player, 2, -2)
+
+		if not database[mob_name][owner] then
+			database[mob_name][owner] = {}
+		end
 	end
 	database[mob_name][player_name] = {}	
 end
