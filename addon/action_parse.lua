@@ -5,6 +5,25 @@
 
 ]]
 
+local skillchains = {
+	[288] = 'Light',
+	[289] = 'Darkness',
+	[290] = 'Gravitation',
+	[291] = 'Fragmentation',
+	[292] = 'Distortion',
+	[293] = 'Fusion',
+	[294] = 'Compression',
+	[295] = 'Liquefaction',
+	[296] = 'Induration',
+	[297] = 'Reverberation',
+	[298] = 'Transfixion',
+	[299] = 'Scission',
+	[300] = 'Detonation',
+	[301] = 'Impaction',
+	[767] = 'Radiance',
+	[768] = 'Umbra'
+}
+
 function parse_action_packet(act)
 	if pause then return end
 	
@@ -107,8 +126,8 @@ function parse_action_packet(act)
 							if not database[NPC_name]["SC ("..PC_name..")"] then
 								init_mob_player_table(NPC_name,"SC ("..PC_name..")")
 							end	
-							mob_player_table = database[NPC_name]["SC ("..PC_name..")"]							
-							register_data(mob_player_table,'sc',m.add_effect_param)
+							mob_player_table = database[NPC_name]["SC ("..PC_name..")"]
+							register_data(mob_player_table,'sc',m.add_effect_param,nil,m.add_effect_message)
 							debug('sc ('..PC_name..') '..m.add_effect_message..' '..m.add_effect_param)
 						elseif T{161,163,229}:contains(m.add_effect_message) and m.add_effect_param > 0 then
 							register_data(mob_player_table,'add',m.add_effect_param)
@@ -235,6 +254,24 @@ function register_data(mob_player_table,stat,val,spell_type,spell_id)
 				mob_player_table[get_stat_type(stat)][stat].damage = val
 			else
 				mob_player_table[get_stat_type(stat)][stat].damage = mob_player_table[get_stat_type(stat)][stat].damage + val
+			end
+
+			if stat == 'sc' then
+				if not mob_player_table[get_stat_type('largest')] then
+					mob_player_table[get_stat_type('largest')] = {}
+				end
+				if not mob_player_table[get_stat_type('largest')]['largest'] then
+					mob_player_table[get_stat_type('largest')]['largest'] = {
+						['name'] = '',
+						['damage'] = 0
+					}
+				end
+	
+				if val and mob_player_table[get_stat_type('largest')].largest.damage < val then
+					local name = skillchains[spell_id] or 'Skillchain ('..spell_id..')'
+					mob_player_table[get_stat_type('largest')]['largest'].name = name
+					mob_player_table[get_stat_type('largest')]['largest'].damage = val
+				end
 			end
 		end
 	end
