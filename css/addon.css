@@ -1,0 +1,13 @@
+.dropdown ul {
+    zoom: 0.6553;
+}
+
+.dropdown ul li {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+}
+
+.dropdown ul li#fullscreen, .dropdown ul li#settings {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}

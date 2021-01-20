@@ -36,12 +36,12 @@ l = {
         },
         Capture: {
             m: {
-                KR: "캡쳐 파일은 ACT 폴더 하위에 있는 Screenshot 폴더에서 확인할 수 있습니다.",
-                JP: "ACTのスクショトはACTフォルダの中のScreenshotフォルダで確認できます。",
-                EN: "The capture file can be found in the Screenshot folder of your ACT directory.",
-                FR: "Le screenshot peut être trouvé dans le répertoire Screenshot d\'ACT.",
-                DE: "Du findest den aufgenommenen Screenshot in deinem ACT-Ordner unter ScreenShot.",
-                CN: "截图可以在ACT目录下的Screenshot文件夹中找到。",
+                KR: "캡쳐 파일은 Eoparse 폴더 하위에 있는 Screenshot 폴더에서 확인할 수 있습니다.",
+                JP: "EoparseのスクショトはEoparseフォルダの中のScreenshotフォルダで確認できます。",
+                EN: "The capture file can be found in the Screenshot folder of your Eoparse directory.",
+                FR: "Le screenshot peut être trouvé dans le répertoire Screenshot d\'Eoparse.",
+                DE: "Du findest den aufgenommenen Screenshot in deinem Eoparse-Ordner unter ScreenShot.",
+                CN: "截图可以在Eoparse目录下的Screenshot文件夹中找到。",
             }
         },
         submit: {

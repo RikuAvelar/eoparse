@@ -1,4 +1,6 @@
 const WS = require('ws')
+const fs = require('fs')
+const Buffer = require('buffer')
 
 const createEmptyLog = (name) => ({
     "critheal%": "---",
@@ -87,9 +89,11 @@ const wss = new WS.Server({
 });
 
 const broadcastList = new Set();
+let lastLog;
 
 const broadcast = (msg) => {
     for(const ws of broadcastList) {
+        lastLog = msg;
         ws.send(JSON.stringify(msg))
     }
 }
@@ -133,10 +137,31 @@ wss.on('connection', (ws) => {
                 console.log('Corrected', fixedMsg)
                 broadcast(fixedMsg);
             }
+            if (msg && msg.msgtype === 'Capture') {
+                console.log('Capturing screenshot...')
+                if (!fs.existsSync('./captures')) fs.mkdirSync('./captures');
+                nw.Window.get().capturePage(buffer => {
+                    const filename = `./captures/${(new Date()).toISOString().split('T')[0]}-${msg.to}.png`;
+                    console.log(`Screenshot filename: ${filename}`)
+                    fs.writeFile(filename, buffer, {flag: 'w+'}, (err) => {
+                        if (err) console.error(err);
+                    })
+                }, {format: 'png', datatype: 'buffer'})
+            }
         } catch {
 
         }
     }, {once: false})
 })
+
+
+window.OverlayPluginApi = { 
+    endEncounter() {
+        broadcast({
+            ...lastLog,
+            isActive: false
+        })
+    }
+}
 
 addEventListener('unload', () => wss.close())
