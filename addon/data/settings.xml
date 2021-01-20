@@ -208,5 +208,6 @@
             <pet>true</pet>
         </record>
         <update_interval>2</update_interval>
+        <UpdateFrequency>1</UpdateFrequency>
     </global>
 </settings>
