@@ -1,6 +1,6 @@
 {
   "name": "eoparse",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "",
   "main": "index.html?HOST_PORT=ws://127.0.0.1:10505/",
   "scripts": {
