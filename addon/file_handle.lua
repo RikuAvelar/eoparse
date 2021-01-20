@@ -6,22 +6,28 @@
 ]]
 
 files = require('files')
-xml = require('xml')
-
 function import_parse(file_name)   
-	local path = '/data/export/'..file_name
+	-- message('Importing is not yet available')
+	local path =  windower.addon_path..'/data/export/'..file_name
+
+	local f = assert(io.open(path..'.json', "rb"))
+    local content = f:read("*all")
+	f:close()
+
 	
-	import = files.new(path..'.xml', true)
-	parsed, err = xml.read(import)
+	-- import = files.new(path..'.json', true)
+	-- parsed, err = xml.read(import)
 	
-	if not parsed then
-		message(err or 'XML error: Unknown error.')
-		return
-	end
+	-- if not parsed then
+	-- 	message(err or 'XML error: Unknown error.')
+	-- 	return
+	-- end
 	
-	imported_database = construct_database(parsed)	
-	merge_tables(database,imported_database)
-	--message(print_table(database))
+	-- -- imported_database = construct_database(parsed)
+	imported_database = json.decode(content)
+	dps_clock:merge(imported_database.clock)
+	merge_tables(database,imported_database.database)
+	-- --message(print_table(database))
 
 	message('Parse ['..file_name..'] was imported to database!')
 end
@@ -46,28 +52,36 @@ function export_parse(file_name)
 		path = path..os.date(' %H %M %S%p  %y-%d-%m')
 	end
 	
-	if windower.file_exists(path..'.xml') then
+	if windower.file_exists(path..'.json') then
 		path = path..'_'..os.clock()
 	end
 	
-	local f = io.open(path..'.xml','w+')
-	f:write('<database>\n')
+	local f = io.open(path..'.json','w+')
+
+	-- f:write('<database>\n')
 	
 	--f:write(to_xml(database))
 	
 	--in order to filter mobs
-	for mob,data in pairs(database) do		
-		if check_filters('mob',mob) then
-			f:write('    <'..mob..'>\n')
-			f:write(to_xml(data,'        '))
-			f:write('    </'..mob..'>\n')
-		end		
-	end
+	-- for mob,data in pairs(database) do		
+	-- 	if check_filters('mob',mob) then
+	-- 		f:write('    <'..mob..'>\n')
+	-- 		f:write(to_xml(data,'        '))
+	-- 		f:write('    </'..mob..'>\n')
+	-- 	end		
+	-- end
 	
-	f:write('</database>')
+	-- f:write('</database>')
+
+	data = {
+		['database'] = database,
+		['clock'] = dps_clock
+	}
+
+	f:write(json.encode(data))
 	f:close()
 	
-	message('Database was exported to '..path..'.xml!')
+	message('Database was exported to '..path..'.json!')
 	if get_filters()~="" then
 		message('Note that the database was filtered by [ '..get_filters()..' ]')
 	end

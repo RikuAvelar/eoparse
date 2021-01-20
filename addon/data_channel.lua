@@ -21,18 +21,18 @@ function connect_channel()
     client = websocket.client.sync({timeout=1})
     local ok = client:connect('ws://127.0.0.1:10505')
     ws_connected = ok
-    sent_dc_msg = false
 
     if not ok and not sent_dc_msg then
         message('Could not find Eoparse server. Did you start the UI?')
         sent_dc_msg = true
-    else
+    elseif ok then
         connection_attempts = 0
     end
 end
 
 function reset_retries()
     connection_attempts = 0
+    sent_dc_msg = false
 end
 
 function maintain_connection()
@@ -41,12 +41,17 @@ function maintain_connection()
         connect_channel()
 
         if connection_attempts >= retry_limit then
+            message('Eoparse server not found. Retrying again in 30 seconds (or retry now with //eop connect)')
             coroutine.schedule(reset_retries, 30)
         end
     end
 end
 
 function create_combat_message(filters)
+    local main_player = windower.ffxi.get_player()
+
+    if not main_player then return nil end
+
     local msg = {}
     local data = {}
     
@@ -64,7 +69,7 @@ function create_combat_message(filters)
     local total_hits = 0
     local total_crits = 0
     local encounter_name = (filters and filters~= '') and 'Encounter ('..filters..')' or 'Encounter'
-    local main_player = windower.ffxi.get_player()
+    
     local you = main_player.name
     local main_model = model:findOrCreateTempPlayer(you)
     main_model.job = main_player.main_job

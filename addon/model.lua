@@ -123,7 +123,13 @@ windower.register_event('incoming chunk',function(id,original,modified,injected,
 	
 	if id == 0xB then
 		-- utils:log('Zoning...')
-        zoning = true
+		zoning = true
+		
+		update_texts()
+		dps_clock:reset()
+		connect_channel()
+		reset_parse()
+		
         model:clear()
     elseif id == 0xA and zoning then
 		-- utils:log('Zoning done.')

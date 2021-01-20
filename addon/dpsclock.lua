@@ -45,6 +45,20 @@ function DPSClock:reset()
     self.prev_time = 0
 end
 
+function DPSClock:merge(clock)
+    self.active = clock.active
+    self.clock = clock.clock
+    self.prev_time = clock.prev_time
+end
+
+function DPSClock:raw()
+    return {
+        ['clock'] = self.clock,
+        ['prev_time'] = self.prev_time,
+        ['active'] = self.active
+    }
+end
+
 
 -- Convert integer seconds into a "HhMmSs" string
 function DPSClock:to_string()

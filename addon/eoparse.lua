@@ -138,12 +138,27 @@ require 'action_parse'
 require 'report'
 require 'file_handle'
 
+auto_export = nil
+auto_export_count = 1
+
 ActionPacket.open_listener(parse_action_packet)
 
 windower.register_event('addon command', function(...)
     local args = {...}
     if args[1] == 'report' then
 		report_data(args[2],args[3],args[4])
+	elseif (args[1] == 'autoexport') then
+		if args[2] then
+			message('Autoexport now active under folder '..args[2])
+			auto_export = args[2]
+			if not windower.dir_exists(windower.addon_path..'data/export/'..auto_export) then
+				windower.create_dir(windower.addon_path..'data/export/'..auto_export)
+			end
+		else
+			auto_export = nil
+			auto_export_count = 1
+			message('Autoexport deactivated')
+		end
 	elseif (args[1] == 'filter' or args[1] == 'f') and args[2] then
 		edit_filters(args[2],args[3],args[4])
 		update_texts()
@@ -156,6 +171,7 @@ windower.register_event('addon command', function(...)
 		connect_channel()
 		update_texts()
 	elseif args[1] == 'reset' then
+		check_auto_export()
 		dps_clock:reset()
 		connect_channel()
 		reset_parse()
@@ -185,6 +201,7 @@ windower.register_event('addon command', function(...)
 		message('reset ::  Resets parse.')
 		message('rename [player name] [new name] :: Renames a player or monster for NEW incoming data.')
 		message('save [file name] :: Saves parse to tab-delimited txt file. Filters are applied and data is collapsed.')
+		message('autoexport [folder name] :: Automatically exports a file to this subfolder at the end of every encounter. An empty folder will cancel the auto exporting.')
 		message('import/export [file name] :: Imports/exports an xml file to/from database. Filters are applied permanently.')
 		message('list/l [mobs/players] :: Lists the mobs and players currently in the database. "mobs" is the default.')
 	end
@@ -298,6 +315,13 @@ function print_list(list_type)
 	end
 end
 
+function check_auto_export()
+	if auto_export then
+		export_parse(auto_export..'/encounter'..auto_export_count)
+		auto_export_count = auto_export_count + 1
+	end
+end
+
 -- Returns true if monster, or part of monster name, is found in filter list
 function check_filters(filter_type,mob_name)
 	if not filters[filter_type] or filters[filter_type]:tostring()=="{}" then
@@ -310,6 +334,8 @@ function check_filters(filter_type,mob_name)
 	end
 	return false
 end
+
+local tick_counter = 0
 
 local function update_dps_clock()
     local player = windower.ffxi.get_player()
@@ -324,9 +350,21 @@ local function update_dps_clock()
         end
     end
     if player and (player.in_combat or (pet ~= nil and pet.status == 1)) then
-        dps_clock:advance()
+		dps_clock:advance()
+		tick_counter = 0
     else
-        dps_clock:pause()
+		dps_clock:pause()
+		tick_counter = tick_counter + 1
+		if tick_counter == 15 then
+			-- Consider the encounter over, but display the last results as the current value
+			update_texts()
+			
+			dps_clock:reset()
+			connect_channel()
+			check_auto_export()
+
+			reset_parse()
+		end
     end
 end
 
