@@ -1413,10 +1413,10 @@ l = {
                             DE: "Zahnrad",
                             CN: "齿轮",
                         },
-                        black: {
+                        Dark: {
                             KR: "칠흑색",
                             JP: "ジェットブラック",
-                            EN: "Jet Black",
+                            EN: "Jet Dark",
                             FR: "Noir de jais",
                             DE: "Rabenschwarzer",
                             CN: "煤玉黑",
@@ -1773,7 +1773,7 @@ l = {
                 tt: {
                     KR: "흑마도사 & 주술사",
                     JP: "黒魔道士 & 呪術士",
-                    EN: "Black Mage & Thaumaturge",
+                    EN: "Dark Mage & Thaumaturge",
                     FR: "Mage noir & Occuliste",
                     DE: "Schwarzmagier & Thaumaturg",
                     CN: "黑魔法师 & 咒术师",
@@ -1858,7 +1858,7 @@ l = {
                 tt: {
                     KR: "대장장이",
                     JP: "鍛冶師",
-                    EN: "Blacksmith",
+                    EN: "Darksmith",
                     FR: "Forgeron",
                     DE: "Grobschmied",
                     CN: "锻铁匠",

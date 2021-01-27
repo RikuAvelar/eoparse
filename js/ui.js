@@ -113,12 +113,12 @@ function resizeDropdown() {
 }
 $('[name=More]').unbind("click").bind("click", function() {
     $('.dropdown').fadeIn(0);
-    $('#blackBg').fadeIn(150);    
+    $('#DarkBg').fadeIn(150);    
     createDOM('dr_nav', null, $(this).parent().parent().attr('name'))
     resizeWindow(view)
 });
-$('#blackBg').unbind("click").bind("click", function() {
-    $('.dropdown, #blackBg').fadeOut(0);
+$('#DarkBg').unbind("click").bind("click", function() {
+    $('.dropdown, #DarkBg').fadeOut(0);
     $('.dropdown ul').css('height', '');    
     localStorage.setItem('Mopi2_HAERU', JSON.stringify(init))
     if (lastCombat != null && view == "main")
@@ -247,8 +247,8 @@ function hiddenTable() {
                         if (view == 'history')
                             $('div[name=history]').fadeOut(150)
                         else {
-                            if ($('#blackBg').css('display') == "block")
-                                $('#blackBg').trigger('click')
+                            if ($('#DarkBg').css('display') == "block")
+                                $('#DarkBg').trigger('click')
                             $('div[name=main]').fadeOut(150)
                         }
                         callToast('hiddenTable', 0, 3000)
@@ -265,8 +265,8 @@ function hiddenTable() {
                     if (view == 'history')
                         $('div[name=history]').fadeOut(150)
                     else {
-                        if ($('#blackBg').css('display') == "block")
-                            $('#blackBg').trigger('click')
+                        if ($('#DarkBg').css('display') == "block")
+                            $('#DarkBg').trigger('click')
                         $('div[name=notice]').fadeOut(150)
                     }
                     callToast('hiddenTable', 0, 3000)
@@ -511,7 +511,7 @@ function liReload() {
         else {
             if ($(this).hasClass('radio')) {
                 $('.dropdown').fadeIn(0);
-                $('#blackBg').fadeIn(150);
+                $('#DarkBg').fadeIn(150);
                 if (id.indexOf('alignHeader') > -1 || id.indexOf('alignBody') > -1) {
                     createCellPageDropDown(id.split('_')[1], id.split('_')[0])
                 } else {
@@ -756,7 +756,7 @@ function button(id, direction) {
             break            
         case 'home':
             button('Back', 'main')
-            $('.dropdown, #blackBg').fadeOut(0);
+            $('.dropdown, #DarkBg').fadeOut(0);
             break            
         case 'fullscreen':
             toggleFullScreen()
@@ -835,7 +835,7 @@ function button(id, direction) {
             $('nav[name=settings] [name=Back]').attr('onclick', "button('Back', 'main')")
             $('[name=main], [name=notice]').fadeOut(0)
             $('[name=settings]').fadeIn(0)
-            $('.dropdown, #blackBg').fadeOut(0);
+            $('.dropdown, #DarkBg').fadeOut(0);
             createDOM('page', l.Settings)
             $('.scrollArea').scrollTop(sVal.old)
             resizeWindow(view)
@@ -941,7 +941,7 @@ function button(id, direction) {
         case 'DPSfilter':
         case 'HPSfilter':
             $('.dropdown').fadeIn(0);
-            $('#blackBg').fadeIn(150);
+            $('#DarkBg').fadeIn(150);
             createDOM('dr_checkbox', l.format['tab_' + id.split('f')[0]].inner[id].dr)
             break
     }
