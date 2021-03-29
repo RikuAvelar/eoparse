@@ -20,9 +20,11 @@
   "license": "ISC",
   "dependencies": {
     "nw": "^0.50.2-sdk",
+    "pant": "^0.4.1",
     "ws": "^7.4.1"
   },
   "devDependencies": {
+    "create-react-app": "^4.0.3",
     "nw-builder": "^3.5.7"
   }
 }

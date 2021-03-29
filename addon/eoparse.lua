@@ -122,11 +122,12 @@ pause = false
 buffs = {["Palisade"] = false, ["Reprisal"] = false}
 
 stat_types = {}
-stat_types.defense = S{"hit","block","evade","parry","intimidate","absorb","shadow","anticipate"}
+stat_types.defense = S{"hit","block","evade","parry","intimidate","absorb","shadow","anticipate","nonparry","nonblock","retrate","nonret"}
 stat_types.melee = S{"melee","miss","crit"}
 stat_types.ranged = S{"ranged","r_miss","r_crit"}
-stat_types.category = S{"ws","ja","spell","ws_miss","ja_miss"}
+stat_types.category = S{"ws","ja","spell","mb","enfeeb","ws_miss","ja_miss","enfeeb_miss"}
 stat_types.other = S{"spike","sc","add", "largest"}
+stat_types.multi = S{'1','2','3','4','5','6','7','8'}
 
 dps_clock = require('dpsclock'):new() -- global for now
 model = require('model')

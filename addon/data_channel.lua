@@ -4,6 +4,8 @@ local connection_attempts = 0
 
 local retry_limit = 1
 
+res = require('resources')
+
 function send_data(data)
     local ok = client:send(data)
     ws_connected = ok
@@ -68,7 +70,8 @@ function create_combat_message(filters)
     local total_miss = 0
     local total_hits = 0
     local total_crits = 0
-    local encounter_name = (filters and filters~= '') and 'Encounter ('..filters..')' or 'Encounter'
+    local zone_name = res.zones[windower.ffxi.get_info().zone].english or 'Encounter'
+    local encounter_name = (filters and filters~= '') and zone_name .. ' ('..filters..')' or zone_name
     
     local you = main_player.name
     local main_model = model:findOrCreateTempPlayer(you)
@@ -84,7 +87,12 @@ function create_combat_message(filters)
             local hits = crits + get_player_stat_tally('melee', player_name) + get_player_stat_tally('ranged', player_name) + get_player_stat_tally('ws', player_name)
             local miss = get_player_stat_tally('miss', player_name) + get_player_stat_tally('r_miss', player_name) + get_player_stat_tally('ws_miss', player_name)
             local largest = get_player_stat_largest('largest', player_name)
-            local name = player_name == you and 'YOU' or player_name
+            local name = player_name
+            local hits_taken = get_player_stat_tally('hit', player_name)
+            local block = get_player_stat_tally('block', player_name)
+            local intimidate = get_player_stat_tally('intimidate', player_name)
+            local evade = get_player_stat_tally('evade', player_name)
+            local avgMulti = get_player_stat_avg('multi', player_name)
 
             total_damage = total_damage + damage
             total_dps = total_dps + dps
@@ -113,6 +121,11 @@ function create_combat_message(filters)
                 largest and string.format('%s-%i', largest.name, largest.damage) or '',
                 largest and ''..largest.damage or '0',
                 parry,
+                hits_taken,
+                block,
+                intimidate,
+                evade,
+                avgMulti,
                 0
             )
         end
@@ -129,6 +142,12 @@ function create_combat_message(filters)
         total_miss,
         all_largest and string.format('%s-%s-%i', all_largest_player, all_largest.name, all_largest.damage) or '',
         all_largest and ''..all_largest.damage or '0',
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         0
     )
 
@@ -137,8 +156,9 @@ function create_combat_message(filters)
     return msg
 end
 
-function create_combatant(name, job, duration, time, dps, total_damage, hits, crits, misses, largest_hit, largest_hit_dmg, parry, heal_total)
+function create_combatant(name, job, duration, time, dps, total_damage, hits, crits, misses, largest_hit, largest_hit_dmg, parry, hits_taken, block, intimidate, evade, avg_multi, heal_total)
     duration = duration or 1
+    avg_multi = avg_multi or 0
 
     local hps = 0
 
@@ -216,11 +236,18 @@ function create_combatant(name, job, duration, time, dps, total_damage, hits, cr
         ["Last180DPS"] = ''..dps,
         ["overHeal"] = "0",
         
-        ["ParryPct"] = string.format('%.2f', hits and (100 * parry / hits) or 0) .. '%',
+        ["ParryPct"] = "",
         ["DirectHitPct"] = "",
         ["DirectHitCount"] = "",
         ["CritDirectHitCount"] = "",
-        ["CritDirectHitPct"] = ""
+        ["CritDirectHitPct"] = "",
+
+        ["avgMulti"] = ""..avg_multi,
+        ["parryCount"] = ""..parry,
+        ["hitsTaken"] = ""..hits_taken,
+        ["blockCount"] = ""..block,
+        ["evadeCount"] = ""..evade,
+        ["intimidateCount"] = ""..intimidate
     }
 end
 
@@ -228,6 +255,8 @@ function create_encounter(title, duration, time, dps, total_damage, hits, crits,
     duration = duration or 1
 
     local hps = 0
+    
+    local you = windower.ffxi.get_player().name
 
     return {
         ["n"] = "\n",
@@ -300,6 +329,7 @@ function create_encounter(title, duration, time, dps, total_damage, hits, crits,
         ["Last30DPS"] = ''..dps,
         ["Last60DPS"] = ''..dps,
         ["Last180DPS"] = ''..dps,
-        ["overHeal"] = "0"
+        ["overHeal"] = "0",
+        ["pcName"] = you
     }
 end

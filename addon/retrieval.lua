@@ -10,11 +10,12 @@
 percent_table = {
 		intimidate = S{"hit","block","anticipate","parry","evade"},
 		evade = S{"hit","block","anticipate","parry"},
-		parry = S{"hit","block","anticipate"},
+		parry = S{"nonparry"},
 		anticipate = S{"hit","block"},
-		block = S{"hit"},
+		block = S{"nonblock"},
 		absorb = S{"hit","block"},
-	
+		retrate = S{"nonret"},
+
 		melee = S{"miss","+crit"},
 		crit = S{"melee"},
 		
@@ -22,7 +23,16 @@ percent_table = {
 		r_crit = S{"ranged"},
 		
 		ws = S{"ws_miss"},
-		ja = S{"ja_miss"}
+		ja = S{"ja_miss"},
+		
+		['1'] = S{'2','3','4','5','6','7','8'},
+		['2'] = S{'1','3','4','5','6','7','8'},
+		['3'] = S{'1','2','4','5','6','7','8'},
+		['4'] = S{'1','2','3','5','6','7','8'},
+		['5'] = S{'1','2','3','4','6','7','8'},
+		['6'] = S{'1','2','3','4','5','7','8'},
+		['7'] = S{'1','2','3','4','5','6','8'},
+		['8'] = S{'1','2','3','4','5','6','7'},
 	}
 
 -- Returns a table of players	
@@ -258,17 +268,26 @@ function get_player_stat_damage(stat,plyr,mob_filters)
 end
 
 function get_player_stat_avg(stat,plyr,mob_filters)
-	local damage,tally = 0,0
+	if S{'ws_miss','ja_miss','enfeeb','enfeeb_miss'}:contains(stat) then return nil end
+	if type(stat)=='number' then stat=tostring(stat) end
+	local total,tally,result,digits = 0,0,0,0
 	
-	damage = get_player_stat_damage(stat,plyr,mob_filters)
-	tally = get_player_stat_tally(stat,plyr,mob_filters)
+	if stat=='multi' then
+		digits = 2
+		for i,__ in pairs(stat_types.multi) do
+			total = total + (get_player_stat_tally(i,plyr,mob_filters) * tonumber(i))
+			tally = tally + get_player_stat_tally(i,plyr,mob_filters)
+		end
+	else	
+		digits = 0
+		total = get_player_stat_damage(stat,plyr,mob_filters)
+		tally = get_player_stat_tally(stat,plyr,mob_filters)		
+	end
 
 	if tally == 0 then return nil end
-	
-	digits = 0
 
-	shift = 10 ^ digits
-	result = math.floor( (damage / tally)*shift + 0.5 ) / shift
+	local shift = 10 ^ digits
+	result = math.floor( (total / tally)*shift + 0.5 ) / shift
 	
 	return result
 end

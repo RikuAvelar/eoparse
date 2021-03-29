@@ -1,6 +1,6 @@
 const WS = require('ws')
 const fs = require('fs')
-const Buffer = require('buffer')
+const Buffer = require('buffer').Buffer
 
 const createEmptyLog = (name) => ({
     "critheal%": "---",
@@ -147,6 +147,16 @@ wss.on('connection', (ws) => {
                         if (err) console.error(err);
                     })
                 }, {format: 'png', datatype: 'buffer'})
+            }
+            if (msg && msg.msgtype === 'saveImage') {
+                console.log('Capturing screenshot...')
+                if (!fs.existsSync('./captures')) fs.mkdirSync('./captures');
+                const filename = `./captures/${(new Date()).toISOString().split('T')[0]}-${msg.to}.png`;
+                const buffer = Buffer.from(msg.data, 'base64');
+                console.log(`Screenshot filename: ${filename}`)
+                fs.writeFile(filename, buffer, {flag: 'w+'}, (err) => {
+                    if (err) console.error(err);
+                })
             }
         } catch {
 
