@@ -1,6 +1,6 @@
 # Eoparse
 
-An FFXI addon and external parser, inspired by [MopiMopi](https://github.com/HAERUHAERU/mopimopi), [Parse](https://github.com/flippant/parse) and [Scoreboard](https://github.com/Windower/Lua/tree/live/addons/scoreboard) as its basis.
+An FFXI addon and external parser, inspired by [MopiMopi](https://github.com/HAERUHAERU/mopimopi). The Lua portion of this addon uses [Parse](https://github.com/flippant/parse) and [Scoreboard](https://github.com/Windower/Lua/tree/live/addons/scoreboard) as its basis.
 
 The addon works by emulating the packets expected by an FFXIV ACT-Websocket compliant UI using data from within FFXI. However, the packets have since been customized to also add some items that are not normally present in FFXIV.
 
