@@ -37,10 +37,10 @@ const parseCombatant = (totalDamage, highestDamage, memo) => (c) => {
         petContribution: (100 * memo?.[c.name]?.damage / damage) || 0,
         owner: c.name.match(/\((.+)\)/)?.[1],
 
-        parryRate: parry / totalReceived,
-        blockRate: block / totalReceived,
-        evadeRate: evade / totalReceived,
-        avoidanceRate: 1 - (hitsTaken / totalReceived),
+        parryRate: (parry / totalReceived) || 0,
+        blockRate: (block / totalReceived) || 0,
+        evadeRate: (evade / totalReceived) || 0,
+        avoidanceRate: (1 - (hitsTaken / totalReceived)) || 0,
 
         dps,
         damage,

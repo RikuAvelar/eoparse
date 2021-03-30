@@ -10,7 +10,7 @@ export const Header = ({dispatch, encounter, columns, hideNames, combinePets, is
                     <i class="material-icons">arrow_back</i>
                 </div>
             ` : null}
-            <div class="timer">${encounter?.duration}</div>
+            <div class="timer">${encounter?.duration === '00:00' ? '' : encounter?.duration}</div>
             <h2>${encounter?.name}<small>${encounter?.dps ? `RDPS - ${encounter?.dps}` : ''}</small></h2>
             <div class="icon capture" onclick=${() => dispatch('capture')}>
                 <i class="material-icons">camera</i>

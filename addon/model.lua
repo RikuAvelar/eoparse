@@ -87,6 +87,7 @@ end
 
 function zoningFinished()
 	zoning = false
+	update_texts()
 end
 
 windower.register_event('incoming chunk',function(id,original,modified,injected,blocked)

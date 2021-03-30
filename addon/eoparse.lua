@@ -1,4 +1,4 @@
-_addon.version = '0.2.0'
+_addon.version = '1.0.0'
 _addon.name = 'eoParse'
 _addon.author = 'Rhemia'
 _addon.commands = {'eoparse','eop'}
@@ -341,6 +341,7 @@ local tick_counter = 0
 local function update_dps_clock()
     local player = windower.ffxi.get_player()
     local pet
+	local alliance_in_combat = false
     if player ~= nil then
         local player_mob = windower.ffxi.get_mob_by_id(player.id)
         if player_mob ~= nil then
@@ -350,7 +351,16 @@ local function update_dps_clock()
             end
         end
     end
-    if player and (player.in_combat or (pet ~= nil and pet.status == 1)) then
+	if player ~= nil then
+		party = windower.ffxi.get_party()
+		for id,_ in pairs(alliance_iter) do
+			if party[id] and party[id].mob and party[id].mob.status == 1 then
+				alliance_in_combat = true
+				break
+			end
+		end
+	end
+    if player and (player.in_combat or (pet ~= nil and pet.status == 1)) or alliance_in_combat then
 		dps_clock:advance()
 		tick_counter = 0
     else

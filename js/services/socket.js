@@ -21,6 +21,7 @@ export const useParser = () => {
                 
                 ws.current.send(JSON.stringify({
                     msgtype: 'saveImage',
+                    // title: state.
                     data: canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg|jpeg);base64,/, '')
                 }))
                 break;

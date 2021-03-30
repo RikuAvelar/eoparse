@@ -151,7 +151,7 @@ wss.on('connection', (ws) => {
             if (msg && msg.msgtype === 'saveImage') {
                 console.log('Capturing screenshot...')
                 if (!fs.existsSync('./captures')) fs.mkdirSync('./captures');
-                const filename = `./captures/${(new Date()).toISOString().split('T')[0]}-${msg.to}.png`;
+                const filename = `./captures/${(new Date()).toISOString().split('T')[0]}.png`;
                 const buffer = Buffer.from(msg.data, 'base64');
                 console.log(`Screenshot filename: ${filename}`)
                 fs.writeFile(filename, buffer, {flag: 'w+'}, (err) => {

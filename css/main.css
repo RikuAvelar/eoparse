@@ -62,10 +62,20 @@
     --job-color-dark: hsl(310,51%,26%);
     --job-icon: url('/images/icon/gold/RDM.png');
 }
+.combatant.PLD {
+    --job-color: hsl(192, 43%, 47%);
+    --job-color-dark: hsl(192, 33%, 32%);
+    --job-icon: url('/images/icon/gold/PLD.png');
+}
 .combatant.BLU {
     --job-color: #183D9A;
     --job-color-dark: hsl(223,63%,20%);
     --job-icon: url('/images/icon/gold/BLU.png');
+}
+.combatant.SCH {
+    --job-color: hsl(242, 44%, 34%);
+    --job-color-drk: hsl(242, 30%, 24%);
+    --job-icon: url('/images/icon/gold/SCH.png');
 }
 .combatant.SC {
     --job-color: #FFBB00;
@@ -86,8 +96,8 @@
     --job-icon: url('/images/icon/gold/RUN.png');
 }
 .combatant.GEO {
-    --job-color: #4DD9B3;
-    --job-color-dark: hsl(164,54%,42%);
+    --job-color: hsl(164,54%,42%);
+    --job-color-dark: hsl(164,40%,32%);
     --job-icon: url('/images/icon/gold/GEO.png');
 }
 .combatant.COR {
@@ -324,7 +334,8 @@ header h2 small {
     flex-basis: 20%;
 }
 
-.combatant .info > .name {
+.combatant .info > .name, 
+.combatant .info > .encounter {
     flex: 2 1 10%;
     justify-content: flex-start;
     align-items: center;
