@@ -43,8 +43,12 @@ function maintain_connection()
         connect_channel()
 
         if connection_attempts >= retry_limit then
-            message('Eoparse server not found. Retrying again in 30 seconds (or retry now with //eop connect)')
-            coroutine.schedule(reset_retries, 30)
+            if settings.auto_retry then
+                message('Eoparse server not found. Retrying again in 30 seconds (or retry now with //eop connect)')
+                coroutine.schedule(reset_retries, 30)
+            else
+                message('Eoparse server not found. Once the server has been started, please connect using //eop connect')
+            end
         end
     end
 end
