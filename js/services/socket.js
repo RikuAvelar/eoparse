@@ -4,11 +4,11 @@ import { wrapDispatch } from '../utils/action.js';
 
 import '../html2canvas.min.js';
 
-export const useParser = () => {
+export const useParser = (version = '???') => {
     const ws = useRef(null);
 
     const existingHistory = JSON.parse(localStorage.getItem('history')) || [];
-    const [state, rawDispatch] = useReducer(main, {...getInitialState(), history: existingHistory});
+    const [state, rawDispatch] = useReducer(main, {...getInitialState(version), history: existingHistory});
     const wrappedDispatch = wrapDispatch(rawDispatch);
 
     const dispatch = async (type, payload) => {
@@ -24,6 +24,12 @@ export const useParser = () => {
                     // title: state.
                     data: canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg|jpeg);base64,/, '')
                 }))
+                
+                canvas.toBlob((blob) => {
+                    const data = [new ClipboardItem({'image/png': blob})]
+                    navigator.clipboard.write(data);
+                });
+
                 break;
         }
         wrappedDispatch(type, payload);

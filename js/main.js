@@ -4,8 +4,10 @@ import { HistoryPage } from './components/history.js';
 import { compareCols } from './services/columns.js';
 import { useParser } from './services/socket.js';
 
+const currentVersion = '1.1.0';
+
 const App = () => {
-    const {state, dispatch} = useParser();
+    const {state, dispatch} = useParser(currentVersion);
     const columns = Object.entries(state.columns).filter(([, shown]) => shown).map(([col]) => col).sort(compareCols);
     const combatants = state.combinePets ? state.current.mergedCombatants : state.current.combatants;
     

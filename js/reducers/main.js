@@ -2,7 +2,8 @@ import { reduceParse } from './parse.js';
 
 const startingValues = JSON.parse(localStorage.getItem('settings')) ?? {};
 
-export const getInitialState = () => ({
+export const getInitialState = (version = '???') => ({
+    version,
     isConnected: startingValues.isConnected ?? false,
     combinePets: startingValues.combinePets ?? true,
     hideNames: startingValues.hideNames ?? false,

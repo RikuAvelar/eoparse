@@ -32,7 +32,7 @@ export const Combatant = (props) => {
 }
 
 export const MainParse = ({dispatch, state, encounter, combatants, columns}) => html`
-    <${Header} isHistoryOpen=${state.isHistoryOpen} dispatch=${dispatch} columns=${state.columns} combinePets=${state.combinePets} hideNames=${state.hideNames} encounter=${encounter} />
+    <${Header} version=${state.version} isHistoryOpen=${state.isHistoryOpen} dispatch=${dispatch} columns=${state.columns} combinePets=${state.combinePets} hideNames=${state.hideNames} encounter=${encounter} />
     ${combatants.length > 0 && html`<${InfoRow} columns=${columns} />`}
     ${combatants.map(({
             name,

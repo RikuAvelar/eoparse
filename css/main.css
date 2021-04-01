@@ -3,7 +3,6 @@
     src:url(../font/DS-DIGIB.woff) format("woff"),url(../font/DS-DIGIB.ttf) format("ttf");
 }
 
-
 /**
  * JOB INFO
 */
@@ -51,6 +50,11 @@
     --job-color: #674598;
     --job-color-dark: hsl(265,27%,28%);
     --job-icon: url('/images/icon/gold/BLM.png');
+}
+.combatant.DRK {
+    --job-color: hsl(273, 71%, 23%);
+    --job-color-dark: hsl(273, 61%, 10%);
+    --job-icon: url('/images/icon/gold/DRK.png');
 }
 .combatant.SMN {
     --job-color: #32670B;
@@ -171,14 +175,14 @@ header .timer {
     display: inline-block;
 }
 
-header .icon {
+.icon {
     color: rgb(3, 169, 244);
     cursor: pointer;
     margin-left: 1em;
     -webkit-app-region: no-drag;
 }
 
-header .icon .title {
+.icon .title {
     pointer-events: none;
     opacity: 0;
     transition-property: opacity;
@@ -194,16 +198,49 @@ header .icon .title {
     border-radius: 2px;;
 }
 
-.screenshot header .icon .title {
+.screenshot .icon .title {
     display: none !important;
 }
 
-header .icon:hover .title {
+.icon:hover .title {
     opacity: 1;
 }
 
-header .icon .material-icons {
+.icon .material-icons {
     pointer-events: none;
+}
+
+.double-row {
+    display: flex;
+    align-items: center;
+}
+
+.double-row.small {
+    padding: 4px 16px;
+    font-size: 12px;
+}
+
+.double-row.small .material-icons {
+    font-size: 20px;
+}
+
+.double-row > * {
+    flex: 1 0 50%;
+}
+
+.double-row .right-aligned {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.double-row .toggle {
+    display: flex;
+    cursor: pointer;
+}
+
+.double-row .toggle span.label {
+    margin-right: 2em;
 }
 
 header h2 {
@@ -378,9 +415,22 @@ header h2 small {
 }
 
 .column-select > label {
-    margin-right: 0.5em;
-    margin-top: 0.25em;
-    margin-bottom: 0.25em;
+    margin: .25em 0;
+    padding: 0 .4em;
+    border-right: 1px solid #777;
+}
+
+.column-select > label:first-child {
+    padding-left: 0;
+}
+
+.column-select > label:last-child {
+    padding-right: 0;
+    border: 0;
+}
+
+.column-select .label.toggle-label {
+    margin-right: 4px;
 }
 
 .toggle {

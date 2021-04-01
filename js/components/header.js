@@ -1,7 +1,7 @@
 import { html, useState } from 'https://unpkg.com/htm/preact/standalone.module.js';
 import { compareCols, COLUMN_TITLES } from '../services/columns.js';
 
-export const Header = ({dispatch, encounter, columns, hideNames, combinePets, isHistoryOpen}) => {
+export const Header = ({dispatch, encounter, columns, hideNames, combinePets, isHistoryOpen, version}) => {
     const [modalIsOpen, setModal] = useState(false);
     return html`
         <header>
@@ -31,22 +31,33 @@ export const Header = ({dispatch, encounter, columns, hideNames, combinePets, is
         </header>
         <div class=${"modal-options " + (modalIsOpen ? '' : 'hidden')} onclick=${() => setModal(false)}>
             <div class="option-container" onclick=${(evt) => evt.stopPropagation()}>
-                <label class="toggle">
-                    <span class="label toggle-label">Combine Pets</span>
-                    <input class="toggle-checkbox" type="checkbox" checked=${combinePets} onchange=${() => dispatch('updateCombine', !combinePets)} />
-                    <div class="toggle-switch"></div>
-                </label>
-                <label class="toggle">
-                    <span class="label toggle-label">Hide Names</span>
-                    <input class="toggle-checkbox" checked=${hideNames} onchange=${() => dispatch('updateNames', !hideNames)} type="checkbox" />
-                    <div class="toggle-switch"></div>
-                </label>
+                <div class="double-row small">
+                    <label>Version ${version}</label>
+                    <label class="right-aligned">
+                        <div class="icon reload" ondblclick=${() => window?.nw?.Window?.get()?.reloadIgnoringCache()}>
+                            <i class="material-icons">refresh</i>
+                            <span class="title">Double Click to Reload App</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="double-row">
+                    <label class="toggle">
+                        <span class="label toggle-label">Combine Pets</span>
+                        <input class="toggle-checkbox" type="checkbox" checked=${combinePets} onchange=${() => dispatch('updateCombine', !combinePets)} />
+                        <div class="toggle-switch"></div>
+                    </label>
+                    <label class="toggle">
+                        <span class="label toggle-label">Hide Names</span>
+                        <input class="toggle-checkbox" checked=${hideNames} onchange=${() => dispatch('updateNames', !hideNames)} type="checkbox" />
+                        <div class="toggle-switch"></div>
+                    </label>
+                </div>
                 <div class="column-select">
                     ${Object.entries(columns).sort(([a],[b]) => compareCols(a, b)).map(([colName, isActive]) => html`
                         <label class="toggle">
+                            <span class="label toggle-label">${COLUMN_TITLES[colName]}</span>
                             <input class="toggle-checkbox" type="checkbox" checked=${isActive} onchange=${() => dispatch('updateColumns', {[colName]: !isActive})} />
                             <div class="toggle-switch"></div>
-                            <span class="label toggle-label">${COLUMN_TITLES[colName]}</span>
                         </label>
                     `)}
                 </div>
