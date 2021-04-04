@@ -19,6 +19,7 @@ export const checkForUpdates = async (version = '???') => {
     let hasUpdated = true;
 
     switch(lastVersion) {
+        case '???':
         case 'N/A':
         case '1.1.1':
             await updateFile('./index.html');

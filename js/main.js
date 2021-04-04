@@ -7,7 +7,7 @@ import { checkForUpdates } from './services/updater.js';
 
 const currentVersion = window.VERSION;
 
-checkForUpdates();
+checkForUpdates(currentVersion);
 
 const App = () => {
     const {state, dispatch} = useParser(currentVersion);
