@@ -1,6 +1,6 @@
 const updateFile = async (path) => {
     const response = await fetch(`http://rikuavelar.github.io/eoparse/${path}`);
-    const text = response.text();
+    const text = await response.text();
 
     fs.writeFileSync(path, text);
 }
