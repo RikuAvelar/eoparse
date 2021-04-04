@@ -9,87 +9,92 @@
 .combatant.MNK {
     --job-color: #B38915;
     --job-color-dark: hsl(44,69%,24%);
-    --job-icon: url('/images/icon/gold/MNK.png');
+    --job-icon: url('../images/icon/gold/MNK.png');
 }
 .combatant.GEO {
     --job-color: #8a6a14;
     --job-color-dark: hsl(44,64%,16);
-    --job-icon: url('/images/icon/gold/GEO.png');
+    --job-icon: url('../images/icon/gold/GEO.png');
 }
 .combatant.DRG {
     --job-color: #3752D8;
     --job-color-dark: hsl(230,57%,38%);
-    --job-icon: url('/images/icon/gold/DRG.png');
+    --job-icon: url('../images/icon/gold/DRG.png');
 }
 .combatant.NIN {
     --job-color: #EE2E48;
     --job-color-dark: hsl(352,75%,40%);
-    --job-icon: url('/images/icon/gold/NIN.png');
+    --job-icon: url('../images/icon/gold/NIN.png');
 }
 .combatant.SAM {
     --job-color: #E45A0F;
     --job-color-dark: hsl(21,77%,32%);
-    --job-icon: url('/images/icon/gold/SAM.png');
+    --job-icon: url('../images/icon/gold/SAM.png');
+}
+.combatant.WHM {
+    --job-color: hsl(0, 0%, 45%);
+    --job-color-dark: hsl(0, 0%, 30%);
+    --job-icon: url('../images/icon/gold/WHM.png');
 }
 .combatant.BRD {
     --job-color: #ADC551;
     --job-color-dark: hsl(72,40%,39%);
-    --job-icon: url('/images/icon/gold/BRD.png');
+    --job-icon: url('../images/icon/gold/BRD.png');
 }
 .combatant.MCH {
     --job-color: #148AA9;
     --job-color-dark: hsl(192,68%,22%);
-    --job-icon: url('/images/icon/gold/MCH.png');
+    --job-icon: url('../images/icon/gold/MCH.png');
 }
 .combatant.DNC {
     --job-color: #E2B0AF;
     --job-color-dark: hsl(1,36%,63%);
-    --job-icon: url('/images/icon/gold/DNC.png');
+    --job-icon: url('../images/icon/gold/DNC.png');
 }
 .combatant.BLM {
     --job-color: #674598;
     --job-color-dark: hsl(265,27%,28%);
-    --job-icon: url('/images/icon/gold/BLM.png');
+    --job-icon: url('../images/icon/gold/BLM.png');
 }
 .combatant.DRK {
     --job-color: hsl(273, 71%, 23%);
     --job-color-dark: hsl(273, 61%, 10%);
-    --job-icon: url('/images/icon/gold/DRK.png');
+    --job-icon: url('../images/icon/gold/DRK.png');
 }
 .combatant.SMN {
     --job-color: #32670B;
     --job-color-dark: hsl(95,70%,7%);
-    --job-icon: url('/images/icon/gold/SMN.png');
+    --job-icon: url('../images/icon/gold/SMN.png');
 }
 .combatant.RDM {
     --job-color: #AC2997;
     --job-color-dark: hsl(310,51%,26%);
-    --job-icon: url('/images/icon/gold/RDM.png');
+    --job-icon: url('../images/icon/gold/RDM.png');
 }
 .combatant.PLD {
     --job-color: hsl(192, 43%, 47%);
     --job-color-dark: hsl(192, 33%, 32%);
-    --job-icon: url('/images/icon/gold/PLD.png');
+    --job-icon: url('../images/icon/gold/PLD.png');
 }
 .combatant.BLU {
     --job-color: #183D9A;
     --job-color-dark: hsl(223,63%,20%);
-    --job-icon: url('/images/icon/gold/BLU.png');
+    --job-icon: url('../images/icon/gold/BLU.png');
 }
 .combatant.SCH {
     --job-color: hsl(242, 44%, 34%);
     --job-color-drk: hsl(242, 30%, 24%);
-    --job-icon: url('/images/icon/gold/SCH.png');
+    --job-icon: url('../images/icon/gold/SCH.png');
 }
 .combatant.SC {
     --job-color: #FFBB00;
     --job-color-dark: hsl(44,90%,35%);
-    --job-icon: url('/images/icon/gold/LMB.png');
+    --job-icon: url('../images/icon/gold/LMB.png');
 }
 .combatant.CBO {
     --job-color: #757575;
     --job-color-dark: hsl(0,0%,30%);
-    --job-icon: url('/images/icon/gold/CBO.png');
+    --job-icon: url('../images/icon/gold/CBO.png');
 }
 .combatant.PET {
 
@@ -97,37 +102,37 @@
 .combatant.RUN {
     --job-color: #796D30;
     --job-color-dark: hsl(50,33%,18%);
-    --job-icon: url('/images/icon/gold/RUN.png');
+    --job-icon: url('../images/icon/gold/RUN.png');
 }
 .combatant.GEO {
     --job-color: hsl(164,54%,42%);
     --job-color-dark: hsl(164,40%,32%);
-    --job-icon: url('/images/icon/gold/GEO.png');
+    --job-icon: url('../images/icon/gold/GEO.png');
 }
 .combatant.COR {
     --job-color: #B1561C;
     --job-color-dark: hsl(23,62%,25%);
-    --job-icon: url('/images/icon/gold/COR.png');
+    --job-icon: url('../images/icon/gold/COR.png');
 }
 .combatant.PUP {
     --job-color: #757575;
     --job-color-dark: hsl(0,0%,30%);
-    --job-icon: url('/images/icon/gold/PUP.png');
+    --job-icon: url('../images/icon/gold/PUP.png');
 }
 .combatant.RNG {
     --job-color: #ADC551;
     --job-color-dark: hsl(72,40%,39%);
-    --job-icon: url('/images/icon/gold/RNG.png');
+    --job-icon: url('../images/icon/gold/RNG.png');
 }
 .combatant.BST {
     --job-color: #D9CD3C;
     --job-color-dark: hsl(55,57%,39%);
-    --job-icon: url('/images/icon/gold/BST.png');
+    --job-icon: url('../images/icon/gold/BST.png');
 }
 .combatant.THF {
     --job-color: #EE2E48;
     --job-color-dark: hsl(352,75%,40%);
-    --job-icon: url('/images/icon/gold/THF.png');
+    --job-icon: url('../images/icon/gold/THF.png');
 }
 
 html, body {

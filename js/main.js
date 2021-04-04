@@ -4,7 +4,7 @@ import { HistoryPage } from './components/history.js';
 import { compareCols } from './services/columns.js';
 import { useParser } from './services/socket.js';
 
-const currentVersion = '1.1.0';
+const currentVersion = '1.1.1';
 
 const App = () => {
     const {state, dispatch} = useParser(currentVersion);
