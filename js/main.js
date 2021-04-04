@@ -3,8 +3,11 @@ import { MainParse } from './components/combatant.js';
 import { HistoryPage } from './components/history.js';
 import { compareCols } from './services/columns.js';
 import { useParser } from './services/socket.js';
+import { checkForUpdates } from './services/updater.js';
 
-const currentVersion = '1.1.1';
+const currentVersion = window.VERSION;
+
+checkForUpdates();
 
 const App = () => {
     const {state, dispatch} = useParser(currentVersion);
