@@ -6,7 +6,7 @@ const updateFile = async (path) => {
 }
 
 export const checkForUpdates = async (version = '???') => {
-    if (typeof window.fs === 'undefined') {
+    if (typeof fs === 'undefined') {
         // Not running in the app
         return;
     }
