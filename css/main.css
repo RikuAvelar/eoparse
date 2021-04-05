@@ -62,8 +62,8 @@
     --job-icon: url('../images/icon/gold/DRK.png');
 }
 .combatant.SMN {
-    --job-color: #32670B;
-    --job-color-dark: hsl(95,70%,7%);
+    --job-color: hsl(95, 81%, 30%);
+    --job-color-dark: hsl(95,70%,15%);
     --job-icon: url('../images/icon/gold/SMN.png');
 }
 .combatant.RDM {
@@ -144,7 +144,9 @@ html, body {
 
 main {
     width: 100%;
-    /* height: 100%; */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     background-attachment: fixed;
     background-image: url("data:image/svg+xml,%3Csvg fill='%23000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 22h20V2z' fill-opacity='.5'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
     background-size: 1.25rem 1.25rem;
@@ -307,6 +309,18 @@ header h2 small {
 .option-container > div:first-child {
     border-top: 0;
 }
+
+.scroll-container {
+    overflow-y: auto;
+}
+
+.scroll-container::-webkit-scrollbar { width: 8px; height: 3px; border-radius: 0;}
+.scroll-container::-webkit-scrollbar-button {  background-color: #666; }
+.scroll-container::-webkit-scrollbar-track {  background-color: #646464;}
+.scroll-container::-webkit-scrollbar-track-piece { background-color: #000;}
+.scroll-container::-webkit-scrollbar-thumb { height: 50px; background-color: #666;}
+.scroll-container::-webkit-scrollbar-corner { background-color: #646464;}}
+.scroll-container::-webkit-resizer { background-color: #666;}
 
 .combatant {
     display: flex;

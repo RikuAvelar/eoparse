@@ -63,7 +63,7 @@ export const useParser = (version = '???') => {
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('history', JSON.stringify(state.history.slice(-10)))
+        localStorage.setItem('history', JSON.stringify(state.history.slice(-50)))
     }, [state.history]);
 
     useEffect(() => {
