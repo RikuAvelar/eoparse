@@ -12,9 +12,12 @@ export const Header = ({dispatch, encounter, columns, hideNames, combinePets, is
             ` : null}
             <div class="timer">${encounter?.duration === '00:00' ? '' : encounter?.duration}</div>
             <h2>${encounter?.name}<small>${encounter?.dps ? `RDPS - ${encounter?.dps}` : ''}</small></h2>
+            <div class="icon minimize" onclick=${() => window?.nw?.Window?.get()?.minimize()}>
+                <i class="material-icons">minimize</i>
+                <span class="title">Minimize</span>
+            </div>
             <div class="icon capture" onclick=${() => dispatch('capture')}>
                 <i class="material-icons">camera</i>
-                <span class="title">Capture</span>
             </div>
             <div class="icon history" onclick=${() => dispatch('toggleHistory')}>
                 <i class="material-icons">${isHistoryOpen ? 'history_toggle_off' : 'history'}</i>
