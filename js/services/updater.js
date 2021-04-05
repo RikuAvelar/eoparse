@@ -10,6 +10,17 @@ export const checkForUpdates = async (version = '???') => {
         // Not running in the app
         return;
     }
+
+    const rawMain = await fetch('https://raw.githubusercontent.com/RikuAvelar/eoparse/master/js/main.js', {cache: 'no-store'});
+    const rawMainText = await rawMain.text();
+    const [,onlineVersion] = rawMainText.match(/const currentVersion\s+\=\s+['"](.+)['"].*/) ?? [];
+
+    if (onlineVersion !== version) {
+        // Needs a forced update right away
+        window?.nw?.Window?.get()?.reloadIgnoringCache();
+        return;
+    }
+
     const lastVersion = localStorage.getItem('lastVersion') || 'N/A';
 
     if (lastVersion === version) return;

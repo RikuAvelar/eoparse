@@ -5,7 +5,7 @@ import { compareCols } from './services/columns.js';
 import { useParser } from './services/socket.js';
 import { checkForUpdates } from './services/updater.js';
 
-const currentVersion = '1.2.2';
+const currentVersion = '1.2.3';
 
 checkForUpdates(currentVersion);
 
