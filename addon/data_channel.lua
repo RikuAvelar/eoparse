@@ -22,6 +22,7 @@ function connect_channel()
     end
     client = websocket.client.sync({timeout=1})
     local ok = client:connect('ws://127.0.0.1:10505')
+    local was_connected = ws_connected
     ws_connected = ok
 
     if not ok and not sent_dc_msg then
@@ -29,6 +30,9 @@ function connect_channel()
         sent_dc_msg = true
     elseif ok then
         connection_attempts = 0
+        if not was_connected then
+            send_data(json.encode({msgtype='luaConnected', luaVersion=_addon.version}))
+        end
     end
 end
 
@@ -42,7 +46,7 @@ function maintain_connection()
         connection_attempts = connection_attempts + 1
         connect_channel()
 
-        if connection_attempts >= retry_limit then
+        if not ws_connected and connection_attempts >= retry_limit then
             if settings.auto_retry then
                 message('Eoparse server not found. Retrying again in 30 seconds (or retry now with //eop connect)')
                 coroutine.schedule(reset_retries, 30)

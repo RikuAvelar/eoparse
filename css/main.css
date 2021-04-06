@@ -518,3 +518,56 @@ header h2 small {
     transform-origin: 12px 12px;
     transition-timing-function: ease-in-out();
 }
+
+.notification-center {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.toast {
+    display: flex;
+    background-color: #222;
+    color: #eee;
+    padding: 4px 10px;
+    margin-top: 0.5em;
+    animation: 200ms ease-out 0s 1 slideInFromRight;
+}
+
+.toast .main-icon {
+    padding-right: 0.5em;
+    margin-right: 0.5em;
+    border-right: 1px solid #444;
+}
+
+.toast .message {
+    flex-grow: 1;
+}
+
+.toast .message.has-action {
+    cursor: pointer;
+    color: rgb(3, 169, 244);
+}
+
+.toast .close-icon {
+    display: flex;
+    margin-left: 2em;
+    cursor: pointer;
+}
+
+.toast .close-icon i {
+    font-size: 18px;
+    cursor: pointer;
+}

@@ -1,4 +1,4 @@
-_addon.version = '1.1.0'
+_addon.version = '1.3.2'
 _addon.name = 'eoParse'
 _addon.author = 'Rhemia'
 _addon.commands = {'eoparse','eop'}
@@ -21,6 +21,7 @@ messageColor = 213
 default_settings = {}
 default_settings.UpdateFrequency = 0.5
 default_settings.update_interval = 3
+default_settings.split_encounters = true
 default_settings.debug = false
 default_settings.index_shield = false
 default_settings.index_reprisal = true
@@ -177,6 +178,14 @@ windower.register_event('addon command', function(...)
 		connect_channel()
 		reset_parse()
 		update_texts()
+	elseif args[1] == 'togglesplit' then
+		settings.split_encounters = not settings.split_encounters
+		if settings.split_encounters then
+			message('Encounters will now be split automatically')
+		else
+			message('Encounters will no longer automatically split outside of zoning.')
+		end
+		config.save(settings)
 	elseif args[1] == 'pause' or args[1] == 'p' then
 		if pause then pause=false else pause=true end
 		update_texts()
@@ -374,11 +383,13 @@ local function update_dps_clock()
 			-- Consider the encounter over, but display the last results as the current value
 			update_texts()
 			
-			dps_clock:reset()
-			connect_channel()
-			check_auto_export()
-
-			reset_parse()
+			if settings.split_encounters then
+				dps_clock:reset()
+				connect_channel()
+				check_auto_export()
+				
+				reset_parse()
+			end
 		end
     end
 end

@@ -1,11 +1,13 @@
 import { html, render } from 'https://unpkg.com/htm/preact/standalone.module.js';
 import { MainParse } from './components/combatant.js';
 import { HistoryPage } from './components/history.js';
+import { NotificationContainer } from './components/notifications.js';
 import { compareCols } from './services/columns.js';
-import { useParser } from './services/socket.js';
+import { useParser } from './services/parse.js';
 import { checkForUpdates } from './services/updater.js';
 
-const currentVersion = '1.3.1';
+
+const currentVersion = '1.3.2';
 
 checkForUpdates(currentVersion);
 
@@ -14,11 +16,17 @@ const App = () => {
     const columns = Object.entries(state.columns).filter(([, shown]) => shown).map(([col]) => col).sort(compareCols);
     const combatants = state.combinePets ? state.current.mergedCombatants : state.current.combatants;
     
+    let mainPage = null;
     if (state.isHistoryOpen) {
-        return HistoryPage({state, dispatch});
+        mainPage = HistoryPage({state, dispatch});
     } else {
-        return MainParse({state, dispatch, combatants, columns, encounter: state.current.encounter});
+        mainPage = MainParse({state, dispatch, combatants, columns, encounter: state.current.encounter});
     }
+
+    return html`
+        ${mainPage}
+        <${NotificationContainer} notifications=${state.notifications} />
+    `;
 }
 
 render(html`<${App} />`, document.body.querySelector('main'));

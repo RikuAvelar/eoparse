@@ -129,6 +129,7 @@ windower.register_event('incoming chunk',function(id,original,modified,injected,
 		update_texts()
 		dps_clock:reset()
 		connect_channel()
+		check_auto_export()
 		reset_parse()
 		
         model:clear()

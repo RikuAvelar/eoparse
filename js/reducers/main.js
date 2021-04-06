@@ -9,6 +9,12 @@ export const getInitialState = (version = '???') => ({
     hideNames: startingValues.hideNames ?? false,
     isHistoryOpen: false,
     history: [],
+    lua: {
+        onlineVersion: null,
+        localVersion: null,
+        messageRead: false
+    },
+    notifications: [],
     columns: startingValues.columns ?? {
         name: true,
         dps: true,
@@ -29,6 +35,7 @@ export const getInitialState = (version = '???') => ({
         combatants: [],
         mergedCombatants: [],
         encounter: {
+            name: '',
             duration: '00:00',
             dps: 0,
             damage: 0
@@ -66,6 +73,25 @@ export const main = (state, {type, payload}) => {
             }
         case 'setCurrentPage':
             return {...state, currentHistoryPage: payload}
+        case 'luaConnected': {
+            const lua = {...state.lua, localVersion: payload};
+            return {...state, lua};
+        }
+        case 'onlineLuaVersionLoaded': {
+            const lua = {...state.lua, onlineVersion: payload};
+            return {...state, lua};
+        }
+        case 'luaMessageClosed': {
+            const lua = {...state.lua, messageRead: true};
+            return {...state, lua};
+        }
+        case 'addNotification':
+            return {
+                ...state,
+                notifications: [...state.notifications, payload].filter(
+                    ({id}, i, l) => l.findIndex(n => n.id === id) === i
+                )
+            }
         default:
             return state;
     }

@@ -131,6 +131,9 @@ wss.on('connection', (ws) => {
                 console.log('subscribed')
                 broadcastList.add(ws)
             }
+            if (msg && msg.msgtype === 'luaConnected') {
+                broadcast(msg)
+            }
             if (msg && msg.msgtype === 'CombatData') {
                 const fixedMsg = fixCombatLog(msg)
                 console.log('Received', msg)

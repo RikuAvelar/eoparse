@@ -15,7 +15,7 @@ export const checkForUpdates = async (version = '???') => {
     const rawMainText = await rawMain.text();
     const [,onlineVersion] = rawMainText.match(/const currentVersion\s+\=\s+['"](.+)['"].*/) ?? [];
 
-    if (onlineVersion !== version) {
+    if (onlineVersion > version) {
         // Needs a forced update right away
         window?.nw?.Window?.get()?.reloadIgnoringCache();
         return;

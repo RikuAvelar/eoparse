@@ -36,6 +36,30 @@ export const useParser = (version = '???') => {
     }
 
     useEffect(() => {
+        const readLua = async () => {
+            const rawMain = await fetch('https://raw.githubusercontent.com/RikuAvelar/eoparse/master/addon/eoparse.lua', {cache: 'no-store'});
+            const rawMainText = await rawMain.text();
+            const [,onlineLuaVersion] = rawMainText.match(/_addon\.version\s+\=\s+['"](.+)['"].*/) ?? [];
+
+            dispatch('onlineLuaVersionLoaded', onlineLuaVersion)
+        }
+
+        readLua();
+    }, [])
+
+    useEffect(() => {
+        const {onlineVersion, localVersion} = state.lua;
+        if (localVersion && onlineVersion && onlineVersion > localVersion) {
+            dispatch('addNotification', {
+                id: 'newLuaRelease',
+                icon: 'new_releases',
+                action: () => window.require?.('nw.gui')?.Shell?.openExternal('https://github.com/RikuAvelar/eoparse/releases/latest'),
+                message: `An update to the Eoparse Lua Addon is available to download (version ${onlineVersion})`
+            })
+        }
+    }, [state.lua.localVersion, state.lua.onlineVersion])
+
+    useEffect(() => {
         ws.current = new WebSocket('ws://127.0.0.1:10505/MiniParse');
         ws.current.onopen = () => {
             ws.current.send(JSON.stringify({type: 'set_id'}))
@@ -56,11 +80,21 @@ export const useParser = (version = '???') => {
                 if (data.msgtype === 'CombatData') {
                     dispatch('parse', data.msg);
                 }
+
+                if (data.msgtype === 'luaConnected') {
+                    dispatch('luaConnected', data.luaVersion);
+                }
             } catch (err) {
                 console.log(err, e);
             }
         }
     }, []);
+
+    useEffect(() => {
+        if (state.current.encounter.name && !state.lua.localVersion) {
+            dispatch('luaConnected', '1.0.0');
+        }
+    }, [state.current.encounter.name])
 
     useEffect(() => {
         localStorage.setItem('history', JSON.stringify(state.history.slice(-50)))
