@@ -22,9 +22,14 @@
     --job-icon: url('../images/icon/gold/DRG.png');
 }
 .combatant.NIN {
+    --job-color: hsl(283, 85%, 29%);
+    --job-color-dark: hsl(283, 70%, 15%);
+    --job-icon: url('../images/icon/gold/NIN.png');
+}
+.combatant.WAR {
     --job-color: #EE2E48;
     --job-color-dark: hsl(352,75%,40%);
-    --job-icon: url('../images/icon/gold/NIN.png');
+    --job-icon: url('../images/icon/gold/WAR.png');
 }
 .combatant.SAM {
     --job-color: #E45A0F;
@@ -343,7 +348,7 @@ header h2 small {
 
 .history-container {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
 }
 
 .combatant.title {

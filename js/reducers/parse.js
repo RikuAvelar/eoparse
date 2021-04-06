@@ -32,21 +32,22 @@ const parseCombatant = (totalDamage, highestDamage, memo) => (c) => {
         dpc: (damage / totalDamage) || 0,
         critRate: (crits / totalHits) || 0,
         accuracy: (hits / Math.max(1, totalHits)) || 0,
-        maxHitValue: Number(maxHitValueText) || 0,
         contribution: (100 * damage / highestDamage) || 0,
         petContribution: (100 * memo?.[c.name]?.damage / damage) || 0,
         owner: c.name.match(/\((.+)\)/)?.[1],
-
+        
         parryRate: (parry / totalReceived) || 0,
         blockRate: (block / totalReceived) || 0,
         evadeRate: (evade / totalReceived) || 0,
         avoidanceRate: (1 - (hitsTaken / totalReceived)) || 0,
+        
+        maxHitValue: Number(maxHitValueText) > (memo?.[c.name]?.maxHitValue || 0) ? Number(maxHitValueText) : memo?.[c.name]?.maxHitValue,
+        maxHitName: Number(maxHitValueText) > (memo?.[c.name]?.maxHitValue || 0) ? maxHitName : memo?.[c.name]?.maxHitName,
 
         dps,
         damage,
         hits,
         misses,
-        maxHitName,
         avgMulti
     }
 }
@@ -66,6 +67,8 @@ const parse = (data) => {
         [c.owner]: {
             dps: (map[c.owner]?.dps || 0) + c.dps,
             damage: (map[c.owner]?.damage || 0) + c.damage,
+            maxHitValue: Number(c.maxHitValue) > (map[c.owner]?.maxHitValue || 0) ? c.maxHitValue : map[c.owner]?.maxHitValue,
+            maxHitName: Number(c.maxHitValue) > (map[c.owner]?.maxHitValue || 0) ? c.maxHitName : map[c.owner]?.maxHitName,
         }
     }), {});
 

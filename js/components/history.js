@@ -25,7 +25,7 @@ export const HistoryPage = ({state, dispatch}) => {
                     <div class="combatant">
                         <div class="info"><div>No data available</div></div>
                     </div>
-                ` : state.history.map((log, index) => html`
+                ` : [...state.history].map((log, index) => ({log, index})).reverse().map(({log, index}) => html`
                     <div key=${index} class="combatant history-entry" onclick=${() => setCurrentPage(index)}>
                         <div class="info">
                             <div class="encounter">${log.encounter.name} <em style="margin-left: 1em;" title=${new Date(log.date ?? Date.now()).toLocaleString()}>${timeago(log.date ?? Date.now())}</em></div>
