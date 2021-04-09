@@ -7,7 +7,7 @@ import { useParser } from './services/parse.js';
 import { checkForUpdates } from './services/updater.js';
 
 
-const currentVersion = '1.3.2';
+const currentVersion = '1.4.1';
 
 checkForUpdates(currentVersion);
 
