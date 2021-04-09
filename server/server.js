@@ -89,6 +89,9 @@ const wss = new WS.Server({
 });
 
 const broadcastList = new Set();
+const luaSocket = {
+    current: null
+};
 let lastLog;
 
 const broadcast = (msg) => {
@@ -133,12 +136,16 @@ wss.on('connection', (ws) => {
             }
             if (msg && msg.msgtype === 'luaConnected') {
                 broadcast(msg)
+                luaSocket.current = ws;
             }
             if (msg && msg.msgtype === 'CombatData') {
                 const fixedMsg = fixCombatLog(msg)
                 console.log('Received', msg)
                 console.log('Corrected', fixedMsg)
                 broadcast(fixedMsg);
+            }
+            if (msg && msg.msgtype === 'endEncounter') {
+                luaSocket.current.send(rawData);
             }
             if (msg && msg.msgtype === 'Capture') {
                 console.log('Capturing screenshot...')
@@ -162,7 +169,7 @@ wss.on('connection', (ws) => {
                 })
             }
         } catch {
-
+            
         }
     }, {once: false})
 })

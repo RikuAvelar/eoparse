@@ -33,11 +33,11 @@ export const checkForUpdates = async (version = '???') => {
         case '???':
         case 'N/A':
         case '1.1.1':
+        case '1.3.2':
             await updateFile('./index.html');
 
             // Break on the last before default
             break;
-        
         default:
             hasUpdated = false;
             break;

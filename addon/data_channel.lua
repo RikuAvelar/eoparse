@@ -5,8 +5,18 @@ local connection_attempts = 0
 local retry_limit = 1
 
 res = require('resources')
+socket = require('socket')
+coroutine = require('coroutine')
 
 function send_data(data)
+    write_data(data)
+end
+
+function read_data()
+    return read_socket()
+end
+
+function write_data(data)
     local ok = client:send(data)
     ws_connected = ok
 
@@ -16,7 +26,32 @@ function send_data(data)
     end
 end
 
+function is_socket_open()
+    return ws_connected
+end
+
+function read_socket()
+    local sockets = {client.sock};
+    local rdy_sockets = socket.select(sockets, nil, 0);
+    if #rdy_sockets ~= 0 then
+        local msg, opcode, was_clean, code, reason = client:receive()
+        if  msg ~= nil then
+            return json.decode(msg)
+        else
+            return nil
+        end
+    end
+    return nil
+end
+
 function connect_channel()
+    ws_connected = client:send('ping')
+    if not ws_connected then
+        _connect_channel()
+    end
+end
+
+function _connect_channel()
     if client then
         client:close()
     end
@@ -44,7 +79,7 @@ end
 function maintain_connection()
     if connection_attempts < retry_limit and (not client or not ws_connected) then
         connection_attempts = connection_attempts + 1
-        connect_channel()
+        _connect_channel()
 
         if not ws_connected and connection_attempts >= retry_limit then
             if settings.auto_retry then

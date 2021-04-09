@@ -1,4 +1,4 @@
-_addon.version = '1.3.2'
+_addon.version = '1.4.0'
 _addon.name = 'eoParse'
 _addon.author = 'Rhemia'
 _addon.commands = {'eoparse','eop'}
@@ -173,10 +173,7 @@ windower.register_event('addon command', function(...)
 		connect_channel()
 		update_texts()
 	elseif args[1] == 'reset' then
-		check_auto_export()
-		dps_clock:reset()
-		connect_channel()
-		reset_parse()
+		end_encounter()
 		update_texts()
 	elseif args[1] == 'togglesplit' then
 		settings.split_encounters = not settings.split_encounters
@@ -348,6 +345,14 @@ end
 local tick_counter = 0
 local alliance_iter = S{'p1', 'p2', 'p3', 'p4', 'p5', 'a10', 'a11', 'a12', 'a13', 'a14', 'a15', 'a20', 'a21', 'a22', 'a23', 'a24', 'a25'}
 
+function end_encounter()
+	check_auto_export()
+	dps_clock:reset()
+	maintain_connection()
+	
+	reset_parse()
+end
+
 local function update_dps_clock()
     local player = windower.ffxi.get_player()
     local pet
@@ -384,14 +389,21 @@ local function update_dps_clock()
 			update_texts()
 			
 			if settings.split_encounters then
-				dps_clock:reset()
-				connect_channel()
-				check_auto_export()
-				
-				reset_parse()
+				end_encounter()
+				return
 			end
 		end
     end
+
+	if is_socket_open() then
+		local data = read_data()
+		if data then
+			if data.msgtype == 'endEncounter' then
+				end_encounter()
+				update_texts() -- Unlike the timeout, hide the current encounter for feedback
+			end
+		end
+	end
 end
 
 config.register(settings, function(settings)

@@ -5,6 +5,7 @@ import { InfoRow } from './info.js';
 
 const formatNumber = (num) => num > 9999 ? new Intl.NumberFormat('en-US', {notation: 'compact', minimumSignificantDigits : 2, maximumSignificantDigits: 3 }).format(num) : num;
 const formatPercent = (num) => num > 1 ? num.toFixed(1) : (num * 100).toFixed(1);
+const getName = (name, hideNames, pcName) => !hideNames || name === pcName ? name : '';
 
 export const Combatant = (props) => {
     const {
@@ -21,7 +22,7 @@ export const Combatant = (props) => {
             <div class="contribution pet-contribution" style=${{width: `${contribution*petContribution/100}%`}}></div>
             <div class="info">
                 ${columns.map((column) => {
-                    if (column === 'maxHit') return html`<div class="maxHit"><span>${formatNumber(maxHitValue)}</span> <small>${maxHitName}</small></div>`;
+                    if (column === 'maxHit') return html`<div class="maxHit"><span>${formatNumber(maxHitValue)}</span> <small>${maxHitName || 'No Data'}</small></div>`;
                     if (COLUMNS[column] === 'number') return html`<div class=${column}>${formatNumber(props[column])}</div>`;
                     if (COLUMNS[column] === '%') return html`<div class=${column}>${formatPercent(props[column])}<em>%</em></div>`;
                     return html`<div class=${column}>${props[column]}</div>`;
@@ -58,7 +59,7 @@ export const MainParse = ({dispatch, state, encounter, combatants, columns}) => 
             <${Combatant}
                 key=${name}
                 columns=${columns}
-                name=${name}
+                name=${getName(name, state.hideNames, state.current.pcName)}
                 job=${job}
                 dps=${dps}
                 dpc=${dpc}

@@ -94,8 +94,14 @@ export const reduceParse = (state, data) => {
     if (!data?.Combatant) return {};
 
     if (state.current.isActive && !data.isActive) {
+        let history = [...state.history];
+
+        if (state.current.combatants.length > 0) {
+            history = [...history, {...state.current, date: Date.now()}];
+        }
+
         return {
-            history: [...state.history, {...state.current, date: Date.now()}],
+            history,
             current: parse(data),
         }
     }

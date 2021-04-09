@@ -31,6 +31,11 @@ export const useParser = (version = '???') => {
                 });
 
                 break;
+            case 'endEncounter':
+                ws.current.send(JSON.stringify({
+                    msgtype: 'endEncounter'
+                }));
+                break;
         }
         wrappedDispatch(type, payload);
     }

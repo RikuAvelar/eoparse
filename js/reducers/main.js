@@ -59,9 +59,10 @@ export const main = (state, {type, payload}) => {
         case 'updateNames':
             return {...state, hideNames: payload}
         case 'endEncounter':
-            if (state.current.combatants.length) {
-                return {...state, history: [...state.history, {...state.current, date: Date.now()}], current: getInitialState().current}
-            }
+            // Handled by lua
+            // if (state.current.combatants.length) {
+            //     return {...state, history: [...state.history, {...state.current, date: Date.now()}], current: getInitialState().current}
+            // }
             return state;
         case 'toggleHistory':
             return {...state, isHistoryOpen: !state.isHistoryOpen, currentHistoryPage: -1}
