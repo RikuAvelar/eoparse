@@ -11,8 +11,13 @@ export const getInitialState = (version = '???') => ({
     history: [],
     lua: {
         onlineVersion: null,
+
         localVersion: null,
         messageRead: false
+    },
+    announce: {
+        chat: startingValues?.announce?.chat ?? 'p',
+        type: startingValues?.announce?.type ?? 'full'
     },
     notifications: [],
     columns: startingValues.columns ?? {
@@ -92,6 +97,14 @@ export const main = (state, {type, payload}) => {
                 notifications: [...state.notifications, payload].filter(
                     ({id}, i, l) => l.findIndex(n => n.id === id) === i
                 )
+            }
+        case 'updateAnnounceSettings':
+            return {
+                ...state,
+                announce: {
+                    ...state.announce,
+                    ...payload
+                }
             }
         default:
             return state;

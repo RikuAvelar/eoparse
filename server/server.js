@@ -124,6 +124,11 @@ const fixCombatLog = (log) => ({
     }
 })
 
+const sendToLuaEvents = [
+    'endEncounter',
+    'announce'
+]
+
 wss.on('connection', (ws) => {
     console.log('client connected')
     ws.on('message', (rawData) => {
@@ -144,7 +149,7 @@ wss.on('connection', (ws) => {
                 console.log('Corrected', fixedMsg)
                 broadcast(fixedMsg);
             }
-            if (msg && msg.msgtype === 'endEncounter') {
+            if (msg && sendToLuaEvents.includes(msg.msgtype)) {
                 luaSocket.current.send(rawData);
             }
             if (msg && msg.msgtype === 'Capture') {

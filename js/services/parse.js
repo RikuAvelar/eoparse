@@ -4,6 +4,17 @@ import { wrapDispatch } from '../utils/action.js';
 
 import '../html2canvas.min.js';
 
+const getShortList = (list) => [
+    ...list.slice(0, 5).sort((a, b) => b.damage - a.damage),
+    list.slice(5).reduce((merged, c, l) => ({
+        name: 'Others',
+        damage: merged.damage + c.damage,
+        dps: merged.dps + c.dps,
+        dpc: merged.dpc + c.dpc,
+        accuracy: (merged.accuracy + c.accuracy) / l.length
+    }), list[5] ?? null)
+].filter(a => a)
+
 export const useParser = (version = '???') => {
     const ws = useRef(null);
 
@@ -30,6 +41,16 @@ export const useParser = (version = '???') => {
                     navigator.clipboard.write(data);
                 });
 
+                break;
+            case 'announce':
+                ws.current.send(JSON.stringify({
+                    msgtype: 'announce',
+                    target: state.announce.chat,
+                    lines: [
+                        `========== ${payload.encounter.name} ==========`,
+                        ...getShortList(payload.combatants).map(c => `${c.name.padEnd(15)} - ${c.dps} DPS (${(c.dpc * 100).toFixed(1)}%) ${!c.accuracy ? '' : `| Hit Rate: ${(c.accuracy * 100).toFixed(1)}%`}`)
+                    ]
+                }))
                 break;
             case 'endEncounter':
                 ws.current.send(JSON.stringify({
@@ -110,9 +131,10 @@ export const useParser = (version = '???') => {
             isConnected: state.isConnected,
             combinePets: state.combinePets,
             hideNames: state.hideNames,
-            columns: state.columns
+            columns: state.columns,
+            announce: state.announce
         }))
-    }, [state.isConnected, state.combinePets, state.hideNames, state.columns]);
+    }, [state.isConnected, state.combinePets, state.hideNames, state.columns, state.announce.chat, state.announce.type]);
 
     return {
         state,

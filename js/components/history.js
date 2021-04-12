@@ -18,7 +18,7 @@ export const HistoryPage = ({state, dispatch}) => {
             'MyDPS'
         ]
         return html`
-            <${Header} version=${state.version} isHistoryOpen=${state.isHistoryOpen} dispatch=${dispatch} columns=${state.columns} combinePets=${state.combinePets} hideNames=${state.hideNames} encounter=${{name: 'History'}} />
+            <${Header} version=${state.version} combatants=${[]} announce=${state.announce} isHistoryOpen=${state.isHistoryOpen} dispatch=${dispatch} columns=${state.columns} combinePets=${state.combinePets} hideNames=${state.hideNames} encounter=${{name: 'History'}} />
             <${InfoRow} columns=${columns} />
             <div class="history-container scroll-container">
                 ${state.history.length === 0 ? html`

@@ -1,4 +1,4 @@
-_addon.version = '1.4.0'
+_addon.version = '1.5.0'
 _addon.name = 'eoParse'
 _addon.author = 'Rhemia'
 _addon.commands = {'eoparse','eop'}
@@ -7,6 +7,7 @@ require 'tables'
 require 'sets'
 require 'strings'
 require 'actions'
+require 'coroutine'
 json = require 'json'
 websocket = require 'websocket'
 config = require('config')
@@ -148,7 +149,8 @@ ActionPacket.open_listener(parse_action_packet)
 windower.register_event('addon command', function(...)
     local args = {...}
     if args[1] == 'report' then
-		report_data(args[2],args[3],args[4])
+		message('Report is deprecated, please use the UI instead')
+		-- report_data(args[2],args[3],args[4])
 	elseif (args[1] == 'autoexport') then
 		if args[2] then
 			message('Autoexport now active under folder '..args[2])
@@ -201,11 +203,12 @@ windower.register_event('addon command', function(...)
 		update_texts()
 	else
 		message('Command was not found. Valid commands:')
-		message('report [stat] [chatmode] :: Reports stat to designated chatmode. Defaults to damage.')
+		-- message('report [stat] [chatmode] :: Reports stat to designated chatmode. Defaults to damage.')
 		message('filter/f [add/+ | remove/- | clear/reset] [string] :: Adds/removes/clears mob filter.')
 		message('connect :: Manually reconnects the websocket.')
 		message('pause/p :: Pauses/unpauses parse. When paused, data is not recorded.')
 		message('reset ::  Resets parse.')
+		message('togglesplit ::  Toggles the parser between "Reset after every encounter" and "Reset only on zone change".')
 		message('rename [player name] [new name] :: Renames a player or monster for NEW incoming data.')
 		message('save [file name] :: Saves parse to tab-delimited txt file. Filters are applied and data is collapsed.')
 		message('autoexport [folder name] :: Automatically exports a file to this subfolder at the end of every encounter. An empty folder will cancel the auto exporting.')
@@ -401,6 +404,16 @@ local function update_dps_clock()
 			if data.msgtype == 'endEncounter' then
 				end_encounter()
 				update_texts() -- Unlike the timeout, hide the current encounter for feedback
+			end
+			if data.msgtype == 'announce' then
+				local delay = 0
+				for _,line in pairs(data.lines) do
+					local function announce()
+						windower.chat.input('/'..data.target..' '..line)
+					end
+					coroutine.schedule(announce, delay * 1.2)
+					delay = delay + 1
+				end
 			end
 		end
 	end

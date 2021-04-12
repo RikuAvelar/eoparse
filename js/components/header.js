@@ -1,7 +1,13 @@
 import { html, useState } from 'https://unpkg.com/htm/preact/standalone.module.js';
 import { compareCols, COLUMN_TITLES } from '../services/columns.js';
 
-export const Header = ({dispatch, encounter, columns, hideNames, combinePets, isHistoryOpen, version}) => {
+const chatValueName = {
+    p: 'Party',
+    l1: 'Linkshell 1',
+    l2: 'Linkshell 2'
+}
+
+export const Header = ({dispatch, announce, combatants, encounter, columns, hideNames, combinePets, isHistoryOpen, version}) => {
     const [modalIsOpen, setModal] = useState(false);
     return html`
         <header>
@@ -18,6 +24,10 @@ export const Header = ({dispatch, encounter, columns, hideNames, combinePets, is
             </div>
             <div class="icon capture" onclick=${() => dispatch('capture')}>
                 <i class="material-icons">camera</i>
+            </div>
+            <div class="icon announce" onclick=${() => dispatch('announce', {encounter, combatants})}>
+                <i class="material-icons">connect_without_contact</i>
+                <span class="title">Announce to ${chatValueName[announce.chat] || announce.chat}</span>
             </div>
             <div class="icon history" onclick=${() => dispatch('toggleHistory')}>
                 <i class="material-icons">${isHistoryOpen ? 'history_toggle_off' : 'history'}</i>
@@ -40,6 +50,27 @@ export const Header = ({dispatch, encounter, columns, hideNames, combinePets, is
                         <div class="icon reload" ondblclick=${() => window?.nw?.Window?.get()?.reloadIgnoringCache()}>
                             <i class="material-icons">refresh</i>
                             <span class="title">Double Click to Reload App</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="double-row">
+                    <label>
+                        <span class="label">Share to Chat: </span>
+                        <div class="select">
+                            <select value=${announce.chat} onchange=${({target: {value}}) => dispatch('updateAnnounceSettings', {chat: value})}>
+                                <option value="p">Party</option>
+                                <option value="l1">Linkshell 1</option>
+                                <option value="l2">Linkshell 2</option>
+                                <option value="echo">Echo</option>
+                            </select>
+                        </div>
+                    </label>
+                    <label>
+                        <span class="label">Chat Report Type: </span>
+                        <div class="select">
+                            <select value=${announce.type} onchange=${({target: {value}}) => dispatch('updateAnnounceSettings', {type: value})}>
+                                <option value="full">Full</option>
+                            </select>
                         </div>
                     </label>
                 </div>
