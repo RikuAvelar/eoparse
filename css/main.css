@@ -306,7 +306,7 @@ header h2 small {
     font-size: 12px;
 }
 
-.label.toggle-label {
+.label.toggle-label, .label.select-label {
     font-size: 12px;
 }
 
@@ -588,6 +588,7 @@ select {
   .select {
     position: relative;
     display: inline-flex;
+    font-size: 12px;
     min-width: 10em;
     height: 2em;
     line-height: 2;

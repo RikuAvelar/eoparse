@@ -55,7 +55,7 @@ export const Header = ({dispatch, announce, combatants, encounter, columns, hide
                 </div>
                 <div class="double-row">
                     <label>
-                        <span class="label">Share to Chat: </span>
+                        <span class="label select-label">Share to Chat: </span>
                         <div class="select">
                             <select value=${announce.chat} onchange=${({target: {value}}) => dispatch('updateAnnounceSettings', {chat: value})}>
                                 <option value="p">Party</option>
@@ -66,7 +66,7 @@ export const Header = ({dispatch, announce, combatants, encounter, columns, hide
                         </div>
                     </label>
                     <label>
-                        <span class="label">Chat Report Type: </span>
+                        <span class="label select-label">Chat Report Type: </span>
                         <div class="select">
                             <select value=${announce.type} onchange=${({target: {value}}) => dispatch('updateAnnounceSettings', {type: value})}>
                                 <option value="full">Full</option>
