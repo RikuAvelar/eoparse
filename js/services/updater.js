@@ -42,7 +42,7 @@ export const checkForUpdates = async (version = '???') => {
         requiresReload = true;
     }
 
-    if (earlierThan(lastVersion), '1.5.2') {
+    if (earlierThan(lastVersion), '1.5.4') {
         fixHistory();
         requiresReload = true;
     }
