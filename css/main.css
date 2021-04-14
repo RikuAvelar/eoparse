@@ -436,6 +436,7 @@ header h2 small {
 
 .column-select {
     flex-wrap: wrap;
+    line-height: 0;
 }
 
 .column-select > label {
