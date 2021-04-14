@@ -1,4 +1,4 @@
-import { fixHistory } from "./updates/fixHistory";
+import { fixHistory } from "./updates/fixHistory.js";
 
 const updateFile = async (path) => {
     const response = await fetch(`http://rikuavelar.github.io/eoparse/${path}`);
