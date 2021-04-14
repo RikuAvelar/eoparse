@@ -9,7 +9,7 @@ const getJob = (c) => {
 const parseCombatant = (totalDamage, highestDamage, memo) => (c) => {
     const duration = Number(c.DURATION) || 1;
     const damage = Number(c.damage) + (memo?.[c.name]?.damage || 0);
-    const dps = ((damage / duration) || 0) + (memo?.[c.name]?.dps || 0);
+    const dps = Math.floor((damage / duration) || 0) + (memo?.[c.name]?.dps || 0);
     const hits = Number(c.hits) || 0;
     const misses = Number(c.misses) || 0;
     const totalHits = (hits + misses) || 0;
