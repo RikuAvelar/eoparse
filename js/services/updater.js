@@ -1,9 +1,13 @@
+import { fixHistory } from "./updates/fixHistory";
+
 const updateFile = async (path) => {
     const response = await fetch(`http://rikuavelar.github.io/eoparse/${path}`);
     const text = await response.text();
 
     fs.writeFileSync(path, text);
 }
+
+const earlierThan = (latest, ...versions) => versions.some(v => latest < v);
 
 export const checkForUpdates = async (version = '???') => {
     if (typeof fs === 'undefined') {
@@ -21,29 +25,29 @@ export const checkForUpdates = async (version = '???') => {
         return;
     }
 
-    const lastVersion = localStorage.getItem('lastVersion') || 'N/A';
+    let lastVersion = localStorage.getItem('lastVersion') || 'N/A';
 
     if (lastVersion === version) return;
 
     localStorage.setItem('lastVersion', version);
 
-    let hasUpdated = true;
+    let requiresReload = false;
 
-    switch(lastVersion) {
-        case '???':
-        case 'N/A':
-        case '1.1.1':
-        case '1.3.2':
-            await updateFile('./index.html');
-
-            // Break on the last before default
-            break;
-        default:
-            hasUpdated = false;
-            break;
+    if (lastVersion === '???' || lastVersion === 'N/A') {
+        lastVersion = '0.0.0';
     }
 
-    if (hasUpdated) {
+    if (earlierThan(lastVersion, '1.1.1', '1.3.2')) {
+        await updateFile('./index.html');
+        requiresReload = true;
+    }
+
+    if (earlierThan(lastVersion), '1.5.2') {
+        fixHistory();
+        requiresReload = true;
+    }
+
+    if (requiresReload) {
         window?.nw?.Window?.get()?.reloadIgnoringCache();
     }
 }
