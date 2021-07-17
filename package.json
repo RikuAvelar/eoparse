@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nw . --disable-gpu-compositing --force-cpu-draw",
     "old-build": "nwbuild --winIco=./GEO.ico --zip=false --platforms=win64 .",
-    "build": "node nw-package.js",
+    "build": "npm run build:css && node nw-package.js",
+    "build:css": "lessc css/main.less css/main.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "window": {
