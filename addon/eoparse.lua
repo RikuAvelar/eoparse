@@ -384,13 +384,7 @@ local function update_dps_clock()
     else
 		dps_clock:pause()
 		tick_counter = tick_counter + 1
-		if tick_counter < 15 then
-			update_texts()
-		end
 		if tick_counter == 15 then
-			-- Consider the encounter over, but display the last results as the current value
-			update_texts()
-			
 			if settings.split_encounters then
 				end_encounter()
 				return
@@ -398,12 +392,13 @@ local function update_dps_clock()
 		end
     end
 
+	update_texts()
+
 	if is_socket_open() then
 		local data = read_data()
 		if data then
 			if data.msgtype == 'endEncounter' then
 				end_encounter()
-				update_texts() -- Unlike the timeout, hide the current encounter for feedback
 			end
 			if data.msgtype == 'announce' then
 				local delay = 0

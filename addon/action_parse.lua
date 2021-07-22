@@ -191,11 +191,6 @@ function parse_action_packet(act)
 	if multihit_count2 and multihit_count2 > 0 then
 		register_data(NPC_name,PC_name,tostring(multihit_count2))
 	end
-
-	if PC_name and update_tracker == update_interval then
-		update_texts()		
-	end
-	update_tracker = (update_tracker % update_interval) + 1
 end
 
 function construct_PC_name(PC)
