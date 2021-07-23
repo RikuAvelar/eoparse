@@ -3,11 +3,11 @@ import { MainParse } from './components/combatant.js';
 import { HistoryPage } from './components/history.js';
 import { NotificationContainer } from './components/notifications.js';
 import { compareCols } from './services/columns.js';
-import { useParser } from './services/parse.js';
+import { useParser } from './services/useParser.js';
 import { checkForUpdates } from './services/updater.js';
 
 
-const currentVersion = '1.5.5';
+const currentVersion = '1.5.6';
 
 checkForUpdates(currentVersion);
 

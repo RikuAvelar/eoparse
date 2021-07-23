@@ -1,4 +1,4 @@
-_addon.version = '1.5.0'
+_addon.version = '1.5.6'
 _addon.name = 'eoParse'
 _addon.author = 'Rhemia'
 _addon.commands = {'eoparse','eop'}
