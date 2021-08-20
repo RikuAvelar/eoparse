@@ -6,8 +6,10 @@ The addon works by emulating the packets expected by an FFXIV ACT-Websocket comp
 
 # Quick Start Guide
 
-1. Open the Eoparse.EXE app. This is the UI, and will appear on top of the game. Feel free to move it around and resize it
-2. Load the eoparse lua. If it's already loaded, run the `//eop connect` command
+1. Download the latest version of the [Lua](https://github.com/RikuAvelar/eoparse/releases/download/1.5.6/eoparse.7z) and the [UI](https://github.com/RikuAvelar/eoparse/releases/download/1.5.0/eoparse-ui.7z)
+2. Extract the UI anywhere to your computer, and the Addon to your Addons folder in windower
+3. Open the Eoparse.EXE app. This is the UI, and will appear on top of the game. Feel free to move it around and resize it
+4. Load the eoparse lua. If it's already loaded, run the `//eop connect` command
 
 # How to use
 
