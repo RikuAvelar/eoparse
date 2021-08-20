@@ -4,6 +4,11 @@ An FFXI addon and external parser, inspired by [MopiMopi](https://github.com/HAE
 
 The addon works by emulating the packets expected by an FFXIV ACT-Websocket compliant UI using data from within FFXI. However, the packets have since been customized to also add some items that are not normally present in FFXIV.
 
+# Quick Start Guide
+
+1. Open the Eoparse.EXE app. This is the UI, and will appear on top of the game. Feel free to move it around and resize it
+2. Load the eoparse lua. If it's already loaded, run the `//eop connect` command
+
 # How to use
 
 The releases contain 2 folders, Eoparse and Eoparse-UI. Eoparse should be placed in your addons folder and loaded through lua, while the Eoparse UI can be placed elsewhere on your computer. This latter folder contains the external UI that needs to be run separately. The UI itself is essentially an FFXIV parser, so a lot of its options will likely not make much sense in FFXI's context.
